@@ -2,7 +2,11 @@ import React from 'react'
 
 function SignIn() {
   return (
-    <div>SignIn</div>
+    <div>
+      <form>
+        <lable>Name</lable>
+      </form>
+    </div>
   )
 }
 
