@@ -1,13 +1,12 @@
 const bcryptjs = require("bcryptjs");
 const { prisma } = require("../utils/config.js");
+const { errorHandler } = require("../utils/err");
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
   const { fullname, username, email, password } = req.body;
 
   if (!fullname || !username || !email || !password) {
-    return res.status(400).json({
-      message: "All fields are required",
-    });
+    next(errorHandler(400, "All fields are required"));
   }
 
   const hashPassword = bcryptjs.hashSync(password, 10);
@@ -29,7 +28,7 @@ const signup = async (req, res) => {
       msg: "User is created Successfully",
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    next(err);
   }
 };
 
