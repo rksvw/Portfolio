@@ -1,9 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
 
-const prisma = new PrismaClient({
-  log: ["query"],
-});
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
+
+const prisma = globalThis.prisma ?? prismaClientSingleton();
 
 module.exports = {
   prisma,
 };
+
+if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
