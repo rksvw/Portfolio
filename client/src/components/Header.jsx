@@ -6,7 +6,7 @@ function Header() {
   const path = useLocation().pathname;
 
   return (
-    <Navbar className="flex justify-between items-center border-b fixed top-0 left-0 w-full">
+    <Navbar className="flex justify-between items-center border-b fixed top-0 left-0 w-full z-10">
       {/* left */}
       <div className="flex">
         <Link to={"/"}>
