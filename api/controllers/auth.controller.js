@@ -73,7 +73,56 @@ const signin = async (req, res, next) => {
   }
 };
 
+const google = async (req, res, next) => {
+  const { email, name, googlePhotoUrl } = req.body;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (user) {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+      const { password, ...rest } = user;
+      res
+        .status(200)
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .json(rest);
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashPassword = bcryptjs.hashSync(generatedPassword, 10);
+      const newUser = await prisma.user.create({
+        data: {
+          fullname: name,
+          username:
+            name.toLowerCase().split(" ").join("") +
+            Math.random().toString(9).slice(-4),
+          email: email,
+          password: hashPassword,
+          profilePicture: googlePhotoUrl,
+        },
+      });
+      const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET);
+      const { password, ...rest } = newUser;
+      res
+        .status(200)
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .json(rest);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   signup,
   signin,
+  google,
 };

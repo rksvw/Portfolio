@@ -11,7 +11,7 @@ function Header() {
       <div className="flex">
         <Link to={"/"}>
           <span className="px-2 py-1 bg-gradient-to-tr from-lime-400 via-indigo-700 to-rose-300 rounded-lg text-white">
-            Cyrotik
+            Wratsout
           </span>
         </Link>
       </div>

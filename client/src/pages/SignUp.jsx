@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Button, Spinner, Label, Alert, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import OAuth from "../components/OAuth";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -57,12 +58,12 @@ function SignUp() {
         {/* left */}
         <div className="flex-1">
           <h1 className="font-bold dark:text-white text-4xl">
-            Welcome to{" "}
+            Hello{" "}
             <Link
               to={"/"}
               className="px-2 py-1 bg-gradient-to-tr from-lime-400 via-indigo-700 to-rose-300 rounded-lg text-white"
             >
-              Cyrotik
+              Wratsout
             </Link>
           </h1>
           <p className="text-sm mt-5">
@@ -123,6 +124,7 @@ function SignUp() {
                 "Sign Up"
               )}
             </Button>
+            <OAuth />
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
